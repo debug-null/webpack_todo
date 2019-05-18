@@ -1,8 +1,14 @@
 const path = require("path")
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const HTMLPlugin = require('html-webpack-plugin') //可以简化HTML文件的创建，为您的webpack捆绑服务提供服务。
+const webpack = require('webpack')
 
-module.exports = {
+
+const isDev = process.env.NODE_ENV === 'development'
+
+const config =  {
+  target: 'web', 
   entry: path.join(__dirname, 'src/index.js'),
   output:{
     filename: 'bundle.js',
@@ -47,6 +53,30 @@ module.exports = {
   },
   plugins: [
     // 请确保引入这个插件！
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new HTMLPlugin(),
+    new webpack.DefinePlugin({  //它维护一个全局的配置文件，在编译期间会自动检测process.env.NODE_ENV，根据当前的环境变量去替换我们的文件，比如接口域名。
+      'proccess.env':{
+        NODE_ENV: isDev ? '"development"':'"production'
+      }
+    })
   ]
 }
+
+if( isDev ){
+  //方便调式，有多个形式
+  config.devTool = '#cheap-module-eval-source-map',
+  // webpack 2 后才有的
+  config.devServer = {
+    port: 8000,
+    host: '127.0.0.1', //设置为 0.0.0.0 局域网和内网IP和localhost都能访问 
+    overlay: {
+      errors: true, //编译有错误直接显示在页面上
+    },
+    open: true, //自动打开浏览器
+    hot: true //热更新，修改代码后，不刷新页面
+  } 
+}
+
+
+module.exports = config
