@@ -22,6 +22,26 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ]
+      },
+      {
+        test: /\.styl/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'stylus-loader'
+        ]
+      },
+      {
+        test: /\.(gif|jpg|jpeg|png|svg)$/,
+        use: [
+          {
+            loader: 'url-loader', //将图片转为base64直接写在js文件
+            options: {
+              limit: 1024, // 文件小于1024就转为base64，写在js文件
+              name: '[name].file.[ext]' //输出的文件名
+            }
+          }
+        ]
       }
     ]
   },
