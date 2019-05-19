@@ -1,6 +1,9 @@
+import '../assets/style/footer.styl'
 export default {
   data(){
-    author: 'seek'
+    return {
+      author: 'seek'
+    }
   },
   render(){
     return (

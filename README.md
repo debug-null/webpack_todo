@@ -28,3 +28,18 @@
 ### 实现todo的界面
 * 安装Babel-loader时提示 ENOENT: no such file or directory, rename 'F:\webpack打z造todo\node_modules\.staging\is-extendable-e20dea61\README.md'
 > 解决方案： 删除package-lock.json文件，重新安装
+
+* babel-loader  
+> loader 让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解
+JavaScript）。loader 可以将所有类型的文件转换为 webpack 能够处理的有效模块，然后你就可以利用 webpack的打包能力，对它们进行处理。
+
+* babel-loader
+> babel-core的作用在于提供一系列api。这便是说，当webpack使用babel-loader处理文件时，babel-loader实际上调用了babel-core的api，因此也必须安装babel-core：
+
+* babel-preset-env
+> babel-preset-env的作用是告诉babel使用哪种转码规则进行文件处理 
+
+* 解析jsx文件还需要安装下面的依赖
+> //npm i babel-preset-env@1.6.1 babel-plugin-transform-vue-jsx@3.5.0
+> //npm i babel-helper-vue-jsx-merge-props@^2.0.0 babel-plugin-syntax-jsx@^6.8.0
+

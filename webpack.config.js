@@ -22,8 +22,9 @@ const config =  {
       },
       {
         test: /\.jsx$/,
-        loader: 'bebel-loader'
+        loader: 'babel-loader'                  //处理jsx文件
       },
+      
        // 它会应用到普通的 `.css` 文件
       // 以及 `.vue` 文件中的 `<style>` 块
       {
