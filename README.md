@@ -16,3 +16,15 @@
 
 ### webpack-dev-service 的配置和使用
 * 无需建立html文件，可直接通过html-webpack-plugin' 简化html的创建
+* 增加虚拟服务打开html
+* 增加热更新
+
+
+### VUE2的核心技术知识介绍
+* template本质还是render方法
+
+### 配置vue的jsx写法以及postcss
+
+### 实现todo的界面
+* 安装Babel-loader时提示 ENOENT: no such file or directory, rename 'F:\webpack打z造todo\node_modules\.staging\is-extendable-e20dea61\README.md'
+> 解决方案： 删除package-lock.json文件，重新安装

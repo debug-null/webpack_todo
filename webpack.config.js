@@ -20,6 +20,10 @@ const config =  {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
+      {
+        test: /\.jsx$/,
+        loader: 'bebel-loader'
+      },
        // 它会应用到普通的 `.css` 文件
       // 以及 `.vue` 文件中的 `<style>` 块
       {
@@ -34,6 +38,12 @@ const config =  {
         use: [
           'vue-style-loader',
           'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true, //若其他loader已经生成了map，就直接使用，提高编译速度
+            }
+          },
           'stylus-loader'
         ]
       },
@@ -65,7 +75,7 @@ const config =  {
 
 if( isDev ){
   //方便调式，有多个形式
-  config.devTool = '#cheap-module-eval-source-map',
+  // config.devTool = '#cheap-module-eval-source-map',
   // webpack 2 后才有的
   config.devServer = {
     port: 8000,
