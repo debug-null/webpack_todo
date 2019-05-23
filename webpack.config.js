@@ -79,7 +79,7 @@ if( isDev ){
   // config.devTool = '#cheap-module-eval-source-map',
   // webpack 2 后才有的
   config.devServer = {
-    port: 8000,
+    port: 8001,
     host: '127.0.0.1', //设置为 0.0.0.0 局域网和内网IP和localhost都能访问 
     overlay: {
       errors: true, //编译有错误直接显示在页面上
