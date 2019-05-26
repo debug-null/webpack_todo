@@ -3,7 +3,7 @@ const path = require("path")
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HTMLPlugin = require('html-webpack-plugin') //可以简化HTML文件的创建，为您的webpack捆绑服务提供服务。
 const webpack = require('webpack')
-
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -11,7 +11,7 @@ const config =  {
   target: 'web', 
   entry: path.join(__dirname, 'src/index.js'),
   output:{
-    filename: 'bundle.js',
+    filename: 'bundle[hash:8].js',
     path: path.resolve(__dirname, 'dist')
   },
   module: {
@@ -24,30 +24,15 @@ const config =  {
         test: /\.jsx$/,
         loader: 'babel-loader'                  //处理jsx文件
       },
-      
        // 它会应用到普通的 `.css` 文件
       // 以及 `.vue` 文件中的 `<style>` 块
-      {
-        test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.styl/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true, //若其他loader已经生成了map，就直接使用，提高编译速度
-            }
-          },
-          'stylus-loader'
-        ]
-      },
+      // {
+      //   test: /\.css$/,
+      //   use: [
+      //     'vue-style-loader',
+      //     'css-loader'
+      //   ]
+      // },
       {
         test: /\.(gif|jpg|jpeg|png|svg)$/,
         use: [
@@ -87,6 +72,50 @@ if( isDev ){
     open: true, //自动打开浏览器
     hot: true //热更新，修改代码后，不刷新页面
   } 
+
+  config.module.rules.push(
+    {
+      test: /\.styl/,
+      use: [
+        'vue-style-loader',
+        'css-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true, //若其他loader已经生成了map，就直接使用，提高编译速度
+          }
+        },
+        'stylus-loader'
+      ]
+    }
+  )
+
+}else{
+
+  config.output.filename = '[name].[chunkhash:8].js'  //chunkhash只能用在生产环境
+
+  config.module.rules.push(
+    {
+      test: /\.styl/,
+      use: ExtractTextPlugin.extract({
+        fallback: "style-loader",
+        use: [
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          'stylus-loader'
+        ]
+      })
+    }
+  )
+
+  config.plugins.push(
+    new ExtractTextPlugin("styles.[chunkhash:8].css")
+  )
 }
 
 

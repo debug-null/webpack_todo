@@ -45,3 +45,11 @@ JavaScript）。loader 可以将所有类型的文件转换为 webpack 能够处
 
 ### 实现业务逻辑
 * findIndex 返回传入一个测试条件或函数中符合条件的数组的第一个元素位置，很类似some
+
+### webpack配置css单独分离打包
+* 安装 extract-text-webpack-plugin  该插件的主要是为了抽离css样式,防止将样式打包在js中引起页面样式加载错乱的现象 [https://www.npmjs.com/package/extract-text-webpack-plugin](https://www.npmjs.com/package/extract-text-webpack-plugin)
+* 执行后报错： DeprecationWarning: Tapable.plugin is deprecated. Use new API on `.hooks` instead
+  > 问题原因： extract-text-webpack-plugin目前版本不支持webpack4。
+  > 解决方案:  使用extract-text-webpack-plugin的最新的beta版  npm install extract-text-webpack-plugin@next
+* 打包时报错： Path variable [contentHash:8] not implemented in this context: styles.[contentHash:8].css
+  > 解决方案： 不使用cotentHash，改为chunkHash
