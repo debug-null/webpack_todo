@@ -53,3 +53,33 @@ JavaScript）。loader 可以将所有类型的文件转换为 webpack 能够处
   > 解决方案:  使用extract-text-webpack-plugin的最新的beta版  npm install extract-text-webpack-plugin@next
 * 打包时报错： Path variable [contentHash:8] not implemented in this context: styles.[contentHash:8].css
   > 解决方案： 不使用cotentHash，改为chunkHash
+
+### webpack区分打包类库代码及hash优化- [利用浏览器的缓存机制，减少服务器压力,合理使用缓存]
+* 使用new webpack.optimize.CommonsChunkPlugin时报错：Error: webpack.optimize.CommonsChunkPlugin has been removed, please use config.optimization.splitChunks instead.
+  >解决方案： 
+  ```
+    config.optimization = {
+      splitChunks: {
+        cacheGroups: {
+            commons: {
+                name: "vendor",
+                chunks: "initial",
+                minChunks: 2
+            }
+        }
+      }
+    }
+  ``` 
+* hash和chunkhash和contenthash的区别
+  > hash: hash是跟整个项目的构建相关，构建生成的文件hash值都是一样的，所以hash计算是跟整个项目的构建相关，同一次构建过程中生成的hash都是一样的，只要项目里有文件更改，整个项目构建的hash值都会更改。
+  > 如果出口是hash，那么一旦针对项目中任何一个文件的修改，都会构建整个项目，重新获取hash值，缓存的目的将失效
+
+  > chunkhash: 采用hash计算的话，每一次构建后生成的hash值都不一样，即使文件内容压根没有改变。这样子是没办法实现缓存效果，我们需要另一种hash值计算方法，即chunkhash。
+  > chunkhash和hash不一样，它根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的hash值。我们在生产环境里把一些公共库和程序入口文件区分开，单独打包构建，接着我们采用chunkhash的方式生成hash值，那么只要我们不改动公共库的代码，就可以保证其hash值不会受影响。
+  > 由于采用chunkhash，所以项目主入口文件main.js及其对应的依赖文件main.css由于被打包在同一个模块，所以共用相同的chunkhash，但是公共库由于是不同的模块，所以有单独的chunkhash。这样子就保证了在线上构建时只要文件内容没有更改就不会重复构建。
+
+  >contenthash: contenthash表示由文件内容产生的hash值，内容不同产生的contenthash值也不一样。在项目中，通常做法是把项目中css都抽离出对应的css文件来加以引用。
+
+### 课程寄语
+* 学习VUE重点不是API和指令，而是过程
+* 眼界放宽，有点耐心，学习过程中确实会有很多报错，一大半的报错是因为版本不同的原因，所以一定要多点耐心，多看看文档

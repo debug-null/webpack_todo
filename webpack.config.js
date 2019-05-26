@@ -92,6 +92,11 @@ if( isDev ){
 
 }else{
 
+  config.entry = {
+    app: path.join(__dirname, 'src/index.js'),
+    vendor: ['vue'] //按需加载，用到那个模块就填写那个
+  }
+
   config.output.filename = '[name].[chunkhash:8].js'  //chunkhash只能用在生产环境
 
   config.module.rules.push(
@@ -116,6 +121,19 @@ if( isDev ){
   config.plugins.push(
     new ExtractTextPlugin("styles.[chunkhash:8].css")
   )
+  config.optimization = {
+    splitChunks: {
+      cacheGroups: {
+          commons: {
+              name: "vendor", //这里的vendor和entry里定义的名字一致，可自行更换
+              chunks: "initial",
+              minChunks: 2
+          }
+      }
+    }
+  }
+  
+
 }
 
 
