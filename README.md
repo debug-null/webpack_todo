@@ -1,3 +1,6 @@
+### 项目地址预览和源码
+* 预览： [http://www.weilai.info/demo/webpack_todo/](http://www.weilai.info/demo/webpack_todo/)
+* 源码： [https://github.com/SeekHappy/webpack_todo](https://github.com/SeekHappy/webpack_todo)
 ### 前端的价值
 *   搭建前端工程化
 *   网络优化
