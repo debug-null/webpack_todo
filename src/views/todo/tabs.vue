@@ -1,27 +1,28 @@
 <template>
   <div class="helper">
-      <span class="left">{{finshTotal}} items left</span>
-      <span class="tabs">
-        <span 
+    <span class="left">{{ finshTotal }} items left</span>
+    <span class="tabs">
+      <span
         v-for="state in states"
         :key="state"
         :class="[state, filter === state ? 'actived' : '']"
         @click="toggleFilter(state)"
-        >
-          {{state}}
-        </span>
-      </span>
-      <span class="clear"
-        @click="clearAllCompleted"
       >
-        Clear completed
+        {{ state }}
       </span>
+    </span>
+    <span
+      class="clear"
+      @click="clearAllCompleted"
+    >
+      Clear completed
+    </span>
   </div>
 </template>
 <script>
 export default {
-  props:{
-    filter:{
+  props: {
+    filter: {
       required: true,
       type: String
     },
@@ -29,25 +30,25 @@ export default {
       required: true,
       type: Array
     }
-  
+
   },
-  data(){
-    return{
+  data() {
+    return {
       states: ['all', 'active', 'completed']
     }
   },
   computed: {
-      finshTotal(){
-        return this.todos.filter(todo => !todo.completed).length
-      }
+    finshTotal() {
+      return this.todos.filter(todo => !todo.completed).length
+    }
   },
-  methods:{
-    toggleFilter(state){
-      this.$emit("toggle", state)
+  methods: {
+    toggleFilter(state) {
+      this.$emit('toggle', state)
     },
-    clearAllCompleted(state){
-      this.$emit("clearCompleted")
-    } 
+    clearAllCompleted(state) {
+      this.$emit('clearCompleted')
+    }
   }
 }
 </script>

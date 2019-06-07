@@ -1,15 +1,13 @@
 import Vue from 'vue'
 import App from './app.vue'
 
-
 import './assets/style/global.styl'
 
-const root = document.createElement('div');
-document.body.appendChild(root);
-
+const root = document.createElement('div')
+document.body.appendChild(root)
 
 new Vue({
-  render: (h) => h(App),
+  render: (h) => h(App)
 }).$mount(root)
 
 // render: 字符串模板的替代方案，该渲染函数接收一个 createElement 方法作为第一个参数用来创建 VNode。
