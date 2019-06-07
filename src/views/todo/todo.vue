@@ -28,6 +28,9 @@ export default {
     }
   },
   computed: {
+    test(){
+      console.log("Dfsd")
+    },
     filteredTodos(){
        if(this.filter === 'all'){
          return this.todos
@@ -36,6 +39,7 @@ export default {
        return this.todos.filter(todo => completed === todo.completed)
     }
   },
+ 
   methods: {
     addToDo(e){
       this.todos.unshift({
